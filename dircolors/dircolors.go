@@ -3,7 +3,7 @@ Package dircolors adds support for dircolors(5) codes and color init strings.
 
 Examples:
 
-* Key("/tmp") returns "di" assuming /tmp is a subdir.
+* Code("/tmp") returns "di" assuming /tmp is a subdir.
 
 * ForTTY("/tmp") returns a string that contains "tmp" and a terminal color sequence.
 
@@ -58,8 +58,8 @@ var NotNormal = map[string]bool{
 	Socket:      true,
 }
 
-// Key returns the dircolor code for fpath based on its type. Eg. "di" for dir.
-func Key(fpath string) (string, error) {
+// Code returns the dircolor code for fpath based on its type. Eg. "di" for dir.
+func Code(fpath string) (string, error) {
 	info, err := os.Lstat(fpath)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -128,11 +128,11 @@ func ForTTY(fpath string) string {
 		tty = parseDircolors()
 	}
 
-	key, err := Key(fpath)
-	if err != nil || tty[key] == "" {
+	c, err := Code(fpath)
+	if err != nil || tty[c] == "" {
 		return fpath
 	}
-	return "\033[" + tty[key] + "m" + fpath + "\033[0m"
+	return "\033[" + tty[c] + "m" + fpath + "\033[0m"
 }
 
 // parseDircolors returns a map of dircolor code to color. It first retrieves the dircolors string
