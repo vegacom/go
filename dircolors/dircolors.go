@@ -1,12 +1,6 @@
 /*
 Package dircolors adds support for dircolors(5) codes and color init strings.
 
-Examples:
-
-* Code("/tmp") returns "di" assuming /tmp is a subdir.
-
-* ForTTY("/tmp") returns a string that contains "tmp" and a terminal color sequence.
-
 DEPENDENCIES:
 * glog
 
@@ -120,11 +114,13 @@ func Code(fpath string) (string, error) {
 	return Reset, nil
 }
 
+// tty is a map of dircolor code to terminal color sequence. Eg. "di" maps to "01;34" or bold blue.
 var tty map[string]string
 
-// ForTTY wraps fpath with color sequences based on its type. Eg. dirs are colored blue.
+// ForTTY wraps fpath with a terminal color sequence based on its type. Eg. dirs are colored as blue.
 func ForTTY(fpath string) string {
 	if tty == nil {
+		// lazy initalization
 		tty = parseDircolors()
 	}
 
