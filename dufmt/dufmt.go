@@ -1,5 +1,5 @@
 /*
-dufmt prints the disk usage ordered by size with human readable output.
+Binary dufmt prints the disk usage ordered by size with human readable output.
 */
 package main
 
